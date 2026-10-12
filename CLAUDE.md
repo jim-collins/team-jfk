@@ -29,3 +29,4 @@ Read `intent.md`, `spec.md` and `plan.md` before changing anything.
 - Never run code from `readwrite-classroom/`: it is a network drive and npm cannot install there.
 
 ## Common mistakes
+- In tests, text that appears in more than one place (e.g. in the accessibility statement) needs `getAllByText`, not `getByText`, which fails on more than one match.

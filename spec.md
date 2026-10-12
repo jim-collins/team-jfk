@@ -81,7 +81,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
 26. A "Skip to main content" link is the first thing the keyboard reaches on every page. **(A)** (it's part of the GOV.UK page template)
 27. An "Alpha" phase banner with a feedback link (to `#` for now) sits under the header on every page.
 28. A GOV.UK footer on every page links to the accessibility statement.
-29. The accessibility statement page is filled in using the GOV.UK sample structure, with what this service's testing found. The contact details read "[contact email to be confirmed]", and the `#` feedback link is listed as a known gap.
+29. The accessibility statement page follows the structure of GOV.UK's own statement (https://www.gov.uk/help/accessibility-statement), says who runs the service, and is filled in with what this service's testing found. The contact details read "[contact email to be confirmed]", and the `#` feedback link is listed as a known gap.
 30. A cookie notice appears on first visit, saying the service uses only essential cookies, with a "Hide this message" button. The notice says "This service uses only essential cookies". Once hidden, it stays hidden until the page is reloaded, and there is no cookies page.
 31. Each page has its own tab title, in the form "<Page heading> - Check if you can get a Green Home Grant - GOV.UK". **(A)**
 
