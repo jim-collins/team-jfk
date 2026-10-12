@@ -17,6 +17,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
    - Household income: Up to £30,000; £30,001 to £50,000; Over £50,000
    - Existing insulation: None; Loft only; Walls only; Loft and walls
    - Current heating: Gas boiler; Oil boiler; Electric heating; Heat pump
+   The question headings are: "What type of property do you live in?", "Do you own your home outright or with a mortgage?", "What is your household income?", "What insulation does your home already have?", "How is your home currently heated?" **(A)**
 5. Clicking an answer's label selects that answer.
 6. "Continue" saves the answer and opens the next question. After the last question it opens "Check your answers".
 7. "Back" opens the previous page: the first question goes back to the start page, and "Check your answers" goes back to the heating question. **(A)**
