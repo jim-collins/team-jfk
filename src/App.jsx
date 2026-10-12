@@ -7,12 +7,8 @@ import CookieBanner from './components/CookieBanner';
 import GovukHeader from './components/GovukHeader';
 import PhaseBanner from './components/PhaseBanner';
 import GovukFooter from './components/GovukFooter';
+import QuestionPage from './components/QuestionPage';
 import StartPage from './pages/StartPage';
-import PropertyTypePage from './pages/PropertyTypePage';
-import OwnershipPage from './pages/OwnershipPage';
-import IncomePage from './pages/IncomePage';
-import InsulationPage from './pages/InsulationPage';
-import HeatingPage from './pages/HeatingPage';
 import CheckAnswersPage from './pages/CheckAnswersPage';
 import ResultPage from './pages/ResultPage';
 import AccessibilityStatementPage from './pages/AccessibilityStatementPage';
@@ -65,13 +61,20 @@ function App() {
         <main className="govuk-main-wrapper" id="main-content">
           <Routes>
             <Route path="/" element={<StartPage />} />
-            <Route path="/property-type" element={page(PropertyTypePage, 0)} />
-            <Route path="/ownership" element={page(OwnershipPage, 1)} />
-            <Route path="/income" element={page(IncomePage, 2)} />
-            <Route path="/insulation" element={page(InsulationPage, 3)} />
-            <Route path="/heating" element={page(HeatingPage, 4)} />
-            <Route path="/check-answers" element={page(CheckAnswersPage, 5)} />
-            <Route path="/result" element={page(ResultPage, 5)} />
+            {questions.map((q, index) => (
+              <Route
+                key={q.id}
+                path={q.path}
+                element={
+                  <RequireAnswers answers={answers} before={index}>
+                    {/* key: a new question starts fresh rather than reusing the last one's state */}
+                    <QuestionPage key={q.id} questionId={q.id} answers={answers} onAnswer={onAnswer} />
+                  </RequireAnswers>
+                }
+              />
+            ))}
+            <Route path="/check-answers" element={page(CheckAnswersPage, questions.length)} />
+            <Route path="/result" element={page(ResultPage, questions.length)} />
             <Route path="/accessibility-statement" element={<AccessibilityStatementPage />} />
           </Routes>
         </main>

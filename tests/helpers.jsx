@@ -37,7 +37,7 @@ export function savePage(name) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${document.title}</title>
 </head>
-<body class="govuk-template__body govuk-frontend-supported">
+<body class="govuk-template__body">
 ${document.body.innerHTML}
 </body>
 </html>

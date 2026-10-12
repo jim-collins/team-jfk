@@ -100,6 +100,16 @@ describe('question pages', () => {
     expect(document.title).toBe(`${questions[0].heading} - ${SERVICE}`);
   });
 
+  it('starts each new question with nothing selected', async () => {
+    const user = userEvent.setup();
+    await answerUpTo(user, 0);
+    for (const q of questions) {
+      expect(screen.getAllByRole('radio').some((r) => r.checked)).toBe(false);
+      await user.click(screen.getByLabelText(q.options[0].label));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+    }
+  });
+
   it('keeps an answer selected when the user goes Back (req 8)', async () => {
     const user = userEvent.setup();
     await answerUpTo(user, 0);

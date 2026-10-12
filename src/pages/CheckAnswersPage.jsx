@@ -9,7 +9,7 @@ function CheckAnswersPage({ answers }) {
 
   return (
     <>
-      <Link to="/heating" className="govuk-back-link">Back</Link>
+      <Link to={questions[questions.length - 1].path} className="govuk-back-link">Back</Link>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           <h1 className="govuk-heading-l">Check your answers</h1>

@@ -49,7 +49,7 @@ That's 17 states in all. The tests save each state's HTML to `tests/pages/<name>
   - Add `"test": "vitest run"` to `package.json`.
   - Put the test config in a separate `vitest.config.js`, so the server section of `vite.config.js` is never touched.
   - Import `govuk-frontend.min.css` in `main.jsx`, copy its fonts and images to `public/assets/`, and remove the hand-written GOV.UK styles from `App.css` (keep it, empty, for anything left over).
-  - Add `govuk-template` and `govuk-template__body govuk-frontend-supported` to `index.html`.
+  - Add `govuk-template` and `govuk-template__body` to `index.html`. *(`govuk-frontend-supported` was removed in review: it means GOV.UK Frontend's JavaScript has run, and this app loads none.)*
   - In `App`: add the skip link, the GOV.UK Frontend header markup, the Alpha phase banner (feedback link `#`), the footer linking to the accessibility statement through a router `Link`, and the cookie notice ("This service uses only essential cookies" with a "Hide this message" button, held in React state).
   - Fix the starter's nested `<main>` in `AccessibilityStatementPage`.
   - Update the project `CLAUDE.md`:
@@ -92,7 +92,7 @@ That's 17 states in all. The tests save each state's HTML to `tests/pages/<name>
   - `src/App.jsx` (answers state, page titles, focus on page change)
   - `src/pages/StartPage.jsx`
   - `src/components/QuestionPage.jsx` (new, shared by all five questions)
-  - `src/pages/PropertyTypePage.jsx`, `OwnershipPage.jsx`, `IncomePage.jsx`, `InsulationPage.jsx`, `HeatingPage.jsx` (each becomes a thin wrapper around `QuestionPage`)
+  - ~~`src/pages/PropertyTypePage.jsx` … `HeatingPage.jsx` (thin wrappers)~~ *Removed in review: `App.jsx` now builds the five question routes from `src/questions.js`.*
   - `src/components/ErrorSummary.jsx` (new), `src/components/GovukButton.jsx` (reused for Continue), `src/utils/usePageTitle.js` (new)
   - `tests/questions.test.jsx`
 - **What will be done:**

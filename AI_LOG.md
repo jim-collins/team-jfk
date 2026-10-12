@@ -11,8 +11,8 @@ Document **3+ entries** in your AI_LOG covering **3-5 distinct patterns** from t
 | Field | Detail |
 |-------|--------|
 | **Date** | 2026-10-12 |
-| **Task** | Asked Claude (new-project skill) to interview us one question at a time and write `intent.md`, then `spec.md` with requirements, decisions and open questions. Pattern: planning. |
-| **What AI Generated** | A question-by-question interview, then `intent.md` and a `spec.md` with 39 numbered requirements, a decisions table and 10 open questions. When asked, it proposed the income bands (up to £30,000 / £30,001 to £50,000 / over £50,000) and all the result-page wording. It marked its own assumptions with (A), e.g. error message wording and the "Check eligibility" button. |
+| **Task** | Asked Claude (new-project skill) to interview us one question at a time and write `intent.md`, then `spec.md` `plan.md` with requirements, decisions and open questions. Pattern: planning. |
+| **What AI Generated** | A question-by-question interview, then `intent.md` and a `spec.md` and `plan.md` with 39 numbered requirements, a decisions table and 10 open questions. When asked, it proposed the income bands (up to £30,000 / £30,001 to £50,000 / over £50,000) and all the result-page wording. It marked its own assumptions with (A), e.g. error message wording and the "Check eligibility" button. |
 | **What You Changed + Why** | *TO COMPLETE. Reminders: you changed the ownership answer from "renting not eligible" to "renting is not an option" and had the start page say you must own your home; you limited property types to House, Flat, Bungalow with no Other; you chose GOV.UK Frontend to replace the starter's App.css.* |
 
 ## Instance 2: Plan-mode build plan

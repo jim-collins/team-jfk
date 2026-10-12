@@ -7,9 +7,10 @@ const HEADINGS = {
   'not-eligible': "You're not eligible for the Green Home Grant",
 };
 
+const APPLY = "Apply for the Green Home Grant. You'll need proof of your household income and of home ownership.";
 const NEXT_STEPS = {
-  eligible: "Apply for the Green Home Grant. You'll need proof of your household income and of home ownership.",
-  partial: "Apply for the Green Home Grant. You'll need proof of your household income and of home ownership.",
+  eligible: APPLY,
+  partial: APPLY,
   'not-eligible': 'You can find other help with energy costs and home improvements on GOV.UK.',
 };
 
