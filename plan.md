@@ -65,7 +65,7 @@ That's 17 states in all. The tests save each state's HTML to `tests/pages/<name>
   - `npm test` passes the layout tests: the skip link is the first focusable element, and the phase banner, footer link and cookie notice are present. Hiding the cookie notice removes it.
   - axe finds no violations on the start page with the cookie notice shown and hidden.
   - The skip link stays first and the cookie notice comes straight after it. GOV.UK guidance puts the cookie banner first, but spec requirement 26 says the skip link is the first thing reached. Hiding the notice moves focus to the main content.
-  - `npm run dev`: the user opens `https://<hostname>:5002` and sees the GOV.UK header, banner, footer and cookie notice in the GDS font, with no 404s in the DevTools Network tab.
+  - `VITE_PORT=5000 VITE_PUBLIC_HOSTNAME=app-lab11126.labs.decoded.com npm run dev`: the user opens `https://app-lab11126.labs.decoded.com/` (found in step 1: the `app-` address always goes to port 5000; `/proxy/5002/` does not pick the port) and sees the GOV.UK header, banner, footer and cookie notice in the GDS font, with no 404s in the DevTools Network tab.
 
 ### Step 2: The eligibility rules, tests first
 

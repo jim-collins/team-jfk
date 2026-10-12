@@ -113,7 +113,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
 | Back links go to an explicit previous page, not browser history | After a Change, browser history would go to the wrong page. |
 | After a Change, Continue returns to Check your answers | Handbook, "Check your answers". |
 | Answers are kept only in memory, and are lost on reload | Save and return is out of scope (intent). |
-| Routes stay as in the starter's `App.jsx` (`/property-type`, `/ownership`, `/income`, `/insulation`, `/heating`, `/check-answers`, `/result`, `/accessibility-statement`) | Already scaffolded. The app is served at the root of port 5002, so there is no path prefix. |
+| Routes stay as in the starter's `App.jsx` (`/property-type`, `/ownership`, `/income`, `/insulation`, `/heating`, `/check-answers`, `/result`, `/accessibility-statement`) | Already scaffolded. In the lab the app is opened at `https://app-lab11126.labs.decoded.com/`, which goes to port 5000 at the root path, so there is no path prefix. The dev server is started with `VITE_PORT=5000` (the pack's `:5002` address does not reach this lab). |
 | Links between pages use React Router `Link`, not plain `href` | Avoids full page reloads, which would lose the in-memory answers. |
 | File split: JSX components in `src/`, all CSS from GOV.UK Frontend plus `App.css` for anything left over, no inline `style=` | Each language stays in its own file. In React, markup in JSX is the norm. |
 | The nested `<main>` in the starter's `AccessibilityStatementPage` is removed | `App` already provides `<main>`, and two `<main>` elements fail axe. |

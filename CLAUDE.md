@@ -3,8 +3,10 @@ This is a GOV.UK service: "Check if you can get a Green Home Grant". All UI must
 Read `intent.md`, `spec.md` and `plan.md` before changing anything.
 
 ## Commands (run in ~/Documents/my-work/w03-hackathon)
-- `npm run dev`: dev server at https://<hostname>:5002 (run `hostname` for the name)
-  `➜  Local:   http://localhost:5002/`
+- Dev server, as the lab proxy expects (the `app-` address always goes to port 5000, at the root path):
+  `VITE_PORT=5000 VITE_PUBLIC_HOSTNAME=app-lab11126.labs.decoded.com npm run dev`
+  then open https://app-lab11126.labs.decoded.com/ (not `/proxy/5002/`).
+  `➜  Local:   http://localhost:5000/`
 - `npm test`: Vitest, runs once
   `Tests  6 passed (6)`
 - `npm run build && npm run preview`: production build, used for Lighthouse
