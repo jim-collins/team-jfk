@@ -1,8 +1,6 @@
-function GovukButton({ children, onClick, type = 'button', variant = '' }) {
-  const className = `govuk-button ${variant === 'start' ? 'govuk-button--start' : ''}`.trim();
-
+function GovukButton({ children, onClick, type = 'button' }) {
   return (
-    <button type={type} className={className} onClick={onClick}>
+    <button type={type} className="govuk-button" onClick={onClick}>
       {children}
     </button>
   );

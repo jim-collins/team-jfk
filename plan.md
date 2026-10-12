@@ -93,7 +93,7 @@ That's 17 states in all. The tests save each state's HTML to `tests/pages/<name>
   - `src/pages/StartPage.jsx`
   - `src/components/QuestionPage.jsx` (new, shared by all five questions)
   - `src/pages/PropertyTypePage.jsx`, `OwnershipPage.jsx`, `IncomePage.jsx`, `InsulationPage.jsx`, `HeatingPage.jsx` (each becomes a thin wrapper around `QuestionPage`)
-  - `src/components/ErrorSummary.jsx` (new)
+  - `src/components/ErrorSummary.jsx` (new), `src/components/GovukButton.jsx` (reused for Continue), `src/utils/usePageTitle.js` (new)
   - `tests/questions.test.jsx`
 - **What will be done:**
   - Start page: the heading, the description, "You must own your home to use this service", and a Start now button (a router `Link` styled as `govuk-button--start`).
@@ -103,7 +103,7 @@ That's 17 states in all. The tests save each state's HTML to `tests/pages/<name>
     - an error summary with `role="alert"`, the heading "There is a problem", and a link to the first radio
     - an inline error with the same message
     - focus moves to the summary, and the title gets an "Error: " prefix
-  - The spec's tab title for every page. After each page change, focus moves to the top of the page, using a focusable target before the skip link.
+  - The spec's tab title for every page (`src/utils/usePageTitle.js`). After each page change, focus moves to the top of the page (`<body>`, so Tab reaches the skip link first) and a visually hidden `aria-live` region reads out the new title. *(Changed during the build: a focusable hidden title element failed axe's `region` rule, because it sat outside every landmark.)*
   - Redirect to the first unanswered question (requirement 13), as a guard in `App`.
 - **Risks:**
   - Focus handling on page change and on errors can fight each other.
