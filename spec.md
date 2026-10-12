@@ -55,7 +55,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
     - Eligible: "You're likely to be eligible for the Green Home Grant"
     - Partially eligible: "You may be eligible for part of the Green Home Grant"
     - Not eligible: "You're not eligible for the Green Home Grant"
-18. Below the panel, the page lists one reason for **every** answer that made the result partial or not eligible, using the wording in `intent.md`. An eligible result shows no reasons.
+18. Below the panel, the page lists one reason for **every** answer that made the result partial or not eligible, using the wording in `intent.md`. An eligible result shows no reasons. The reasons sit under the heading "Why". **(A)**
 19. Below the reasons is a "What to do next" section, shown as plain text with no links:
     - Eligible or partial: "Apply for the Green Home Grant. You'll need proof of your household income and of home ownership."
     - Not eligible: "You can find other help with energy costs and home improvements on GOV.UK."

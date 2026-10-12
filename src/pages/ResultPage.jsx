@@ -1,16 +1,42 @@
-// TODO: Import the eligibility function
+import { checkEligibility } from '../utils/eligibility';
+import { usePageTitle } from '../utils/usePageTitle';
 
-function ResultPage() {
-  // TODO: Read form state and calculate eligibility
-  // TODO: Display result in a govuk-panel (green for eligible, grey for not eligible)
-  // TODO: Show next steps below the panel
+const HEADINGS = {
+  eligible: "You're likely to be eligible for the Green Home Grant",
+  partial: 'You may be eligible for part of the Green Home Grant',
+  'not-eligible': "You're not eligible for the Green Home Grant",
+};
+
+const NEXT_STEPS = {
+  eligible: "Apply for the Green Home Grant. You'll need proof of your household income and of home ownership.",
+  partial: "Apply for the Green Home Grant. You'll need proof of your household income and of home ownership.",
+  'not-eligible': 'You can find other help with energy costs and home improvements on GOV.UK.',
+};
+
+function ResultPage({ answers }) {
+  const { status, reasons } = checkEligibility(answers);
+  usePageTitle(HEADINGS[status]);
 
   return (
-    <>
-      <h1 className="govuk-heading-l">Result</h1>
-      {/* TODO: Replace this with the eligibility result panel */}
-      <p className="govuk-body">Your eligibility result will appear here.</p>
-    </>
+    <div className="govuk-grid-row">
+      <div className="govuk-grid-column-two-thirds">
+        <div className="govuk-panel govuk-panel--confirmation">
+          <h1 className="govuk-panel__title">{HEADINGS[status]}</h1>
+        </div>
+        {reasons.length > 0 && (
+          <>
+            <h2 className="govuk-heading-m">Why</h2>
+            <ul className="govuk-list govuk-list--bullet">
+              {reasons.map((reason) => (
+                <li key={reason}>{reason}</li>
+              ))}
+            </ul>
+          </>
+        )}
+        <h2 className="govuk-heading-m">What to do next</h2>
+        <p className="govuk-body">{NEXT_STEPS[status]}</p>
+      </div>
+    </div>
   );
 }
 
