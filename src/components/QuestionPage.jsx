@@ -25,7 +25,8 @@ export default function QuestionPage({ questionId, answers, onAnswer }) {
     if (errorCount > 0) summaryRef.current?.focus();
   }, [errorCount]);
 
-  const backHref = index === 0 ? '/' : questions[index - 1].path;
+  // While changing an answer, Back returns to Check your answers, where the user came from.
+  const backHref = changing ? '/check-answers' : index === 0 ? '/' : questions[index - 1].path;
   const nextHref = changing || index === questions.length - 1 ? '/check-answers' : questions[index + 1].path;
 
   function handleSubmit(event) {

@@ -20,7 +20,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
    The question headings are: "What type of property do you live in?", "Do you own your home outright or with a mortgage?", "What is your household income?", "What insulation does your home already have?", "How is your home currently heated?" **(A)**
 5. Clicking an answer's label selects that answer.
 6. "Continue" saves the answer and opens the next question. After the last question it opens "Check your answers".
-7. "Back" opens the previous page: the first question goes back to the start page, and "Check your answers" goes back to the heating question. **(A)**
+7. "Back" opens the previous page: the first question goes back to the start page, and "Check your answers" goes back to the heating question. When the question was opened from a Change link, Back goes to "Check your answers". **(A)**
 8. An answer is still selected when the user returns to its question, by Back or by Change.
 9. "Check your answers" shows all five questions and answers as a GOV.UK summary list.
 10. Each answer has a "Change" link. A screen reader announces it with the question, for example "Change property type".

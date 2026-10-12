@@ -34,17 +34,17 @@ function App() {
   // After each page change, move focus to the top of the page (so Tab reaches the skip link first)
   // and read out the new title through a live region.
   // Pages set their title in their own effects, which run before this one.
+  // Only a new path or query counts: not the first load (StrictMode runs effects twice) or a '#' link.
   const location = useLocation();
+  const pageAddress = location.pathname + location.search;
   const pageAnnouncer = useRef(null);
-  const firstPage = useRef(true);
+  const lastPageAddress = useRef(pageAddress);
   useEffect(() => {
-    if (firstPage.current) {
-      firstPage.current = false;
-      return;
-    }
+    if (lastPageAddress.current === pageAddress) return;
+    lastPageAddress.current = pageAddress;
     pageAnnouncer.current.textContent = document.title;
     focusElement(document.body);
-  }, [location.key]);
+  }, [pageAddress]);
 
   const page = (Page, before) => (
     <RequireAnswers answers={answers} before={before}>

@@ -59,6 +59,15 @@ describe('Check your answers', () => {
     expect(values).toEqual(['House', 'Own outright', 'Over £50,000', 'None', 'Gas boiler']);
   });
 
+  it('sends Back to Check your answers while changing an answer, then still returns there (req 7, 11)', async () => {
+    const user = userEvent.setup();
+    await answerAll(user, ELIGIBLE);
+    await user.click(screen.getByRole('link', { name: 'Change ownership' }));
+    expect(screen.getByRole('link', { name: 'Back' }).getAttribute('href')).toBe('/check-answers');
+    await user.click(screen.getByRole('link', { name: 'Back' }));
+    expect(screen.getByRole('heading', { level: 1, name: 'Check your answers' })).toBeTruthy();
+  });
+
   it('opens the result page from the "Check eligibility" button (req 12)', async () => {
     const user = userEvent.setup();
     await answerAll(user, ELIGIBLE);
