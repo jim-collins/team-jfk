@@ -1,7 +1,10 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import SkipLink from './components/SkipLink';
+import CookieBanner from './components/CookieBanner';
 import GovukHeader from './components/GovukHeader';
-// TODO: Mount PhaseBanner below GovukHeader — import PhaseBanner from './components/PhaseBanner';
-// TODO: Mount GovukFooter after the closing </main> — import GovukFooter from './components/GovukFooter';
+import PhaseBanner from './components/PhaseBanner';
+import GovukFooter from './components/GovukFooter';
 import StartPage from './pages/StartPage';
 import PropertyTypePage from './pages/PropertyTypePage';
 import OwnershipPage from './pages/OwnershipPage';
@@ -12,16 +15,26 @@ import CheckAnswersPage from './pages/CheckAnswersPage';
 import ResultPage from './pages/ResultPage';
 import AccessibilityStatementPage from './pages/AccessibilityStatementPage';
 
+const SERVICE_TITLE = 'Check if you can get a Green Home Grant - GOV.UK';
+
 function App() {
   // TODO: Add form state here (useState) to hold all question answers
   // TODO: Pass state and setter to each page component via props
 
+  useEffect(() => {
+    document.title = SERVICE_TITLE;
+  }, []);
+
   return (
     <>
-      <GovukHeader />
-      {/* TODO: Add <PhaseBanner phase="alpha" feedbackHref="#" /> here */}
+      <SkipLink />
+      <CookieBanner />
+      <header>
+        <GovukHeader />
+        <PhaseBanner phase="Alpha" feedbackHref="#" />
+      </header>
       <div className="govuk-width-container">
-        <main className="govuk-main-wrapper" role="main">
+        <main className="govuk-main-wrapper" id="main-content">
           <Routes>
             <Route path="/" element={<StartPage />} />
             <Route path="/property-type" element={<PropertyTypePage />} />
@@ -35,7 +48,7 @@ function App() {
           </Routes>
         </main>
       </div>
-      {/* TODO: Add <GovukFooter /> here */}
+      <GovukFooter />
     </>
   );
 }

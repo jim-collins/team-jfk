@@ -52,7 +52,7 @@ The result page lists every reason. Wording (suggested by Claude, approved):
 - WCAG 2.2 AA.
 - Tests use Vitest version 1.
 - Final submission: Day 2, 16:00.
-- The project stays in `readwrite-classroom/` (the pack says to work in `~/Documents/my-work/` and that programs cannot be run from `readwrite-classroom/`).
+- The project lives in `~/Documents/my-work/w03-hackathon/`. It was first kept in `readwrite-classroom/`, but npm cannot install there, so the user chose to move it (build step 1).
 - In scope: phase banner, footer, accessibility statement and cookie notice.
 
 ## Out of scope

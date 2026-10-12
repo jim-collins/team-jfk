@@ -1,0 +1,54 @@
+import { describe, it, expect } from 'vitest';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { renderAt, axeViolations, savePage } from './helpers';
+
+describe('page layout', () => {
+  it('has a skip link as the first thing the keyboard reaches (req 26)', async () => {
+    const user = userEvent.setup();
+    renderAt('/');
+    await user.tab();
+    expect(document.activeElement).toHaveProperty('textContent', 'Skip to main content');
+    expect(document.activeElement.getAttribute('href')).toBe('#main-content');
+  });
+
+  it('moves focus to the main content when the skip link is used (req 26)', async () => {
+    const user = userEvent.setup();
+    renderAt('/');
+    await user.click(screen.getByRole('link', { name: 'Skip to main content' }));
+    expect(document.activeElement.id).toBe('main-content');
+  });
+
+  it('shows the GOV.UK header (req 25)', () => {
+    renderAt('/');
+    expect(screen.getByRole('banner')).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'GOV.UK' })).toBeTruthy();
+  });
+
+  it('shows an Alpha phase banner with a feedback link (req 27)', () => {
+    renderAt('/');
+    expect(screen.getByText('Alpha')).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'feedback' }).getAttribute('href')).toBe('#');
+  });
+
+  it('has a footer link to the accessibility statement (req 28)', () => {
+    renderAt('/');
+    const link = screen.getByRole('link', { name: 'Accessibility statement' });
+    expect(link.getAttribute('href')).toBe('/accessibility-statement');
+    expect(link.closest('footer')).toBeTruthy();
+  });
+
+  it('shows the cookie notice until it is hidden (req 30)', async () => {
+    const user = userEvent.setup();
+    renderAt('/');
+    expect(screen.getByText('This service uses only essential cookies.')).toBeTruthy();
+    expect(await axeViolations()).toEqual([]);
+    savePage('start-cookie-notice-shown');
+
+    await user.click(screen.getByRole('button', { name: 'Hide this message' }));
+    expect(screen.queryByText('This service uses only essential cookies.')).toBeNull();
+    expect(document.activeElement.id).toBe('main-content');
+    expect(await axeViolations()).toEqual([]);
+    savePage('start-cookie-notice-hidden');
+  });
+});

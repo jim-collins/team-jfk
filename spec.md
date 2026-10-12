@@ -119,7 +119,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
 | The nested `<main>` in the starter's `AccessibilityStatementPage` is removed | `App` already provides `<main>`, and two `<main>` elements fail axe. |
 | Starter's property-type TODO (Detached / Semi-detached / Terraced / Flat / Bungalow) not followed | The user chose House, Flat, Bungalow (intent). |
 | The pack's example test "council tenants are not eligible" not used | Renting isn't an option (intent). |
-| Project stays in `readwrite-classroom/` | User's choice. |
+| Project lives in `~/Documents/my-work/w03-hackathon/` | npm can't create symlinks on the `readwrite-classroom/` network drive (ENOTSUP), so the user chose to move it in build step 1. |
 | Skipping ahead or reloading sends the user to the first unanswered question | Provisional answer accepted by the user. It stops a result being shown for blank answers. |
 | Cookie notice: "This service uses only essential cookies", a "Hide this message" button, hidden for the visit only, no cookies page | Provisional answer accepted by the user. Remembering it after a reload would need browser storage. |
 | "Household income" means the total yearly income of everyone in the home, before tax, shown as hint text | Provisional answer accepted by the user. The intent doesn't define it. |
@@ -132,7 +132,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
 
 ## 3. Open questions
 
-1. **Can the app run from `readwrite-classroom/`?** *(the build will show)* The pack says programs can't be run from there. If `npm install` or `npm run dev` fails, the project will need to move to `~/Documents/my-work/`.
+None. (The last one, whether the app can run from `readwrite-classroom/`, was settled in build step 1: it can't, so the project moved.)
 
 ## Gaps already settled
 

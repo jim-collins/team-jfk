@@ -10,7 +10,7 @@ Two points were confirmed while planning, so the spec stays as written: the Chec
 
 | Open question | What the build uses until it's answered |
 |---|---|
-| 1. Can the app run from `readwrite-classroom/`? | Try it in step 1. If `npm install` or `npm run dev` fails, stop and ask the user before moving anything. |
+| 1. Can the app run from `readwrite-classroom/`? | **Settled in step 1:** no (`npm install` failed with ENOTSUP). The user chose to move the project to `~/Documents/my-work/w03-hackathon/`. |
 
 ## Pages and error states (each one is checked by axe)
 
@@ -41,7 +41,8 @@ That's 17 states in all. The tests save each state's HTML to `tests/pages/<name>
   - `src/main.jsx`, `src/App.jsx`, `src/App.css`
   - `src/components/GovukHeader.jsx`, `PhaseBanner.jsx`, `GovukFooter.jsx`, `SkipLink.jsx` (new), `CookieBanner.jsx` (new)
   - `public/assets/` (copied from govuk-frontend)
-  - `tests/setup.js`, `tests/helpers.js` (render a route, run axe, save the page), `tests/layout.test.jsx`
+  - `tests/setup.js`, `tests/helpers.jsx` (render a route, run axe, save the page), `tests/layout.test.jsx`
+  - `src/utils/focus.js` (new: moves focus the way GOV.UK Frontend's skip link does; used by the skip link and the cookie notice)
 - **What will be done:**
   - `npm install` the existing dependencies first, to settle open question 1.
   - Install `govuk-frontend`, plus `vitest@1`, `jsdom`, `@testing-library/react`, `@testing-library/user-event` and `axe-core`.
@@ -63,6 +64,7 @@ That's 17 states in all. The tests save each state's HTML to `tests/pages/<name>
 - **Check:**
   - `npm test` passes the layout tests: the skip link is the first focusable element, and the phase banner, footer link and cookie notice are present. Hiding the cookie notice removes it.
   - axe finds no violations on the start page with the cookie notice shown and hidden.
+  - The skip link stays first and the cookie notice comes straight after it. GOV.UK guidance puts the cookie banner first, but spec requirement 26 says the skip link is the first thing reached. Hiding the notice moves focus to the main content.
   - `npm run dev`: the user opens `https://<hostname>:5002` and sees the GOV.UK header, banner, footer and cookie notice in the GDS font, with no 404s in the DevTools Network tab.
 
 ### Step 2: The eligibility rules, tests first
