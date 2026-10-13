@@ -65,6 +65,39 @@ describe('Check your answers', () => {
   });
 });
 
+describe('starting again (req 19a)', () => {
+  it('Start again opens the start page, and the next check starts with nothing selected', async () => {
+    const user = userEvent.setup();
+    await answerAll(user, ['Flat', 'Own with a mortgage', 'Over £50,000', 'Loft only', 'Heat pump']);
+    await user.click(screen.getByRole('button', { name: 'Check eligibility' }));
+
+    await user.click(screen.getByRole('button', { name: 'Start again' }));
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Check if you can get a Green Home Grant' })).toBeTruthy();
+    expect(document.title).toBe(SERVICE);
+    await user.click(screen.getByRole('button', { name: 'Start now' }));
+    expect(screen.getByRole('heading', { level: 1, name: 'What type of property do you live in?' })).toBeTruthy();
+    expect(screen.getAllByRole('radio').some((radio) => radio.checked)).toBe(false);
+  });
+
+  it('a second check gives a result from the new answers only', async () => {
+    const user = userEvent.setup();
+    await answerAll(user, ['Flat', 'Own with a mortgage', 'Over £50,000', 'Loft only', 'Heat pump']);
+    await user.click(screen.getByRole('button', { name: 'Check eligibility' }));
+    await user.click(screen.getByRole('button', { name: 'Start again' }));
+    await user.click(screen.getByRole('button', { name: 'Start now' }));
+    for (const label of ELIGIBLE) {
+      await user.click(screen.getByLabelText(label));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+    }
+    await user.click(screen.getByRole('button', { name: 'Check eligibility' }));
+
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(
+      "You're likely to be eligible for the Green Home Grant"
+    );
+  });
+});
+
 describe('result page (req 17-19)', () => {
   async function resultFor(labels) {
     const user = userEvent.setup();

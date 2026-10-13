@@ -8,9 +8,9 @@ Read `intent.md`, `spec.md` and `plan.md` before changing anything.
   then open https://app-lab11126.labs.decoded.com/ (not `/proxy/5002/`).
   `➜  Local:   http://localhost:5000/`
 - `npm test`: Vitest, runs once
-  `Tests  6 passed (6)`
+  `Tests  58 passed (58)`
 - `npm run test:e2e`: Playwright end-to-end tests (builds and serves the app itself on port 4173). See `e2e/README.md`.
-  `192 passed`
+  `219 passed`
 - `npm run build && npm run preview`: production build, used for Lighthouse
 - Contrast and axe in real Chrome, after `npm test` and `npm run build`:
   `~/.claude/skills/new-project/scripts/lighthouse-pages.sh --dir tests/pages --css dist/assets/index-*.css`

@@ -26,6 +26,7 @@ function App() {
   // All answers live here, so they survive Back and Change.
   const [answers, setAnswers] = useState(NO_ANSWERS);
   const onAnswer = (id, value) => setAnswers((current) => ({ ...current, [id]: value }));
+  const clearAnswers = () => setAnswers(NO_ANSWERS);
 
   const pageAnnouncer = useRef(null);
   usePageChangeFocus(pageAnnouncer);
@@ -59,7 +60,7 @@ function App() {
               />
             ))}
             <Route path="/check-answers" element={guarded(questions.length, <CheckAnswersPage answers={answers} />)} />
-            <Route path="/result" element={guarded(questions.length, <ResultPage answers={answers} />)} />
+            <Route path="/result" element={guarded(questions.length, <ResultPage answers={answers} onStartAgain={clearAnswers} />)} />
             <Route path="/accessibility-statement" element={<AccessibilityStatementPage />} />
           </Routes>
         </main>

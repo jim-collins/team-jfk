@@ -1,5 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { checkEligibility } from '../utils/eligibility';
 import { usePageTitle } from '../utils/usePageTitle';
+import GovukButton from '../components/GovukButton';
 
 const HEADINGS = {
   eligible: "You're likely to be eligible for the Green Home Grant",
@@ -14,9 +16,17 @@ const NEXT_STEPS = {
   'not-eligible': 'You can find other help with energy costs and home improvements on GOV.UK.',
 };
 
-function ResultPage({ answers }) {
+function ResultPage({ answers, onStartAgain }) {
+  const navigate = useNavigate();
   const { status, reasons } = checkEligibility(answers);
   usePageTitle(HEADINGS[status]);
+
+  // Go to the start page and clear the answers in the same update, so the result page
+  // never renders with empty answers (which would redirect to the first question).
+  function handleStartAgain() {
+    navigate('/');
+    onStartAgain();
+  }
 
   return (
     <div className="govuk-grid-row">
@@ -36,6 +46,7 @@ function ResultPage({ answers }) {
         )}
         <h2 className="govuk-heading-m">What to do next</h2>
         <p className="govuk-body">{NEXT_STEPS[status]}</p>
+        <GovukButton onClick={handleStartAgain}>Start again</GovukButton>
       </div>
     </div>
   );
