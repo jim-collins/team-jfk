@@ -83,7 +83,13 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
 27. An "Alpha" phase banner with a feedback link (to `#` for now) sits under the header on every page.
 28. A GOV.UK footer on every page links to the accessibility statement.
 29. The accessibility statement page follows the structure of GOV.UK's own statement (https://www.gov.uk/help/accessibility-statement), says who runs the service, and is filled in with what this service's testing found. The contact details read "[contact email to be confirmed]", and the `#` feedback link is listed as a known gap.
-30. A cookie notice appears on first visit, saying the service uses only essential cookies, with a "Hide this message" button. The notice says "This service uses only essential cookies". Once hidden, it stays hidden until the page is reloaded, and there is no cookies page.
+30. A GOV.UK cookie banner (changed at the user's request after the build, following https://nationalcareers.service.gov.uk/discover-your-skills-and-careers/):
+    - Until the user chooses, every page except the cookies page shows the heading "Tell us whether you accept cookies", the text "We use cookies to collect information about how you use this website. This information is used to make the website work as well as possible and improve our services.", an "Accept all cookies" button, a "Set cookie preferences" button and a "View cookies" link. Both of the last two open the cookies page (`/cookies`).
+    - "Accept all cookies" replaces the question with "You’ve accepted additional cookies. You can change your cookie settings at any time." (the link opens the cookies page), moves focus to it, and shows a "Hide cookie message" button, which removes the banner and moves focus to the main content.
+    - The choice is saved for 1 year in an essential cookie, `cookies_policy`, so the banner doesn't come back after a reload (user's choice).
+    - The cookies page follows the GOV.UK cookies page pattern: what cookies are, a table of essential cookies (`cookies_policy`), an "Analytics cookies (optional)" section saying the service sets no analytics cookies yet, and the question "Do you want to accept analytics cookies?" (Yes / No, No by default) with a "Save cookie settings" button. Saving shows a "Success" notification banner, "You’ve set your cookie preferences.", and moves focus to it. The banner has a "Go back to the page you were looking at" link to the page the user opened the cookies page from, with their answers kept (the start page if they came straight to `/cookies`).
+    - The footer links to the cookies page.
+    - The service sets no analytics cookies; the saved choice is for when it does (user's choice).
 31. Each page has its own tab title, in the form "<Page heading> - Check if you can get a Green Home Grant - GOV.UK". **(A)**
 
 ### Accessibility
@@ -123,7 +129,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
 | The pack's example test "council tenants are not eligible" not used | Renting isn't an option (intent). |
 | Project lives in `~/Documents/my-work/w03-hackathon/` | npm can't create symlinks on the `readwrite-classroom/` network drive (ENOTSUP), so the user chose to move it in build step 1. |
 | Skipping ahead or reloading sends the user to the first unanswered question | Provisional answer accepted by the user. It stops a result being shown for blank answers. |
-| Cookie notice: "This service uses only essential cookies", a "Hide this message" button, hidden for the visit only, no cookies page | Provisional answer accepted by the user. Remembering it after a reload would need browser storage. |
+| Cookie banner and cookies page follow the GOV.UK pattern, with the choice saved for 1 year in `cookies_policy` (requirement 30) | User's choice, replacing the first "only essential cookies" notice. No analytics is set up yet, so the cookies page says so. |
 | "Household income" means the total yearly income of everyone in the home, before tax, shown as hint text | Provisional answer accepted by the user. The intent doesn't define it. |
 | "Walls" insulation covers cavity or solid walls | Provisional answer accepted by the user. |
 | The seeded `AI_LOG.md` example is replaced by the team's own entries | Provisional answer accepted by the user. It's about a different service. A facilitator could still confirm this. |

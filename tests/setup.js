@@ -8,4 +8,6 @@ document.body.className = 'govuk-template__body';
 
 afterEach(() => {
   cleanup();
+  // Each test starts as a first visit, with no cookie choice saved.
+  document.cookie = 'cookies_policy=; max-age=0; path=/';
 });

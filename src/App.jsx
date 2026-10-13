@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { questions } from './questions';
 import { usePageChangeFocus } from './utils/usePageChangeFocus';
+import { readConsent, saveConsent } from './utils/cookieConsent';
 import SkipLink from './components/SkipLink';
 import CookieBanner from './components/CookieBanner';
 import GovukHeader from './components/GovukHeader';
@@ -12,6 +13,7 @@ import StartPage from './pages/StartPage';
 import CheckAnswersPage from './pages/CheckAnswersPage';
 import ResultPage from './pages/ResultPage';
 import AccessibilityStatementPage from './pages/AccessibilityStatementPage';
+import CookiesPage from './pages/CookiesPage';
 
 const NO_ANSWERS = Object.fromEntries(questions.map((q) => [q.id, '']));
 
@@ -28,6 +30,10 @@ function App() {
   const onAnswer = (id, value) => setAnswers((current) => ({ ...current, [id]: value }));
   const clearAnswers = () => setAnswers(NO_ANSWERS);
 
+  // The cookie choice, read once from the consent cookie and saved back to it.
+  const [consent, setConsent] = useState(readConsent);
+  const onSaveConsent = (analytics) => setConsent(saveConsent(analytics));
+
   const pageAnnouncer = useRef(null);
   usePageChangeFocus(pageAnnouncer);
 
@@ -42,7 +48,7 @@ function App() {
     <>
       <div className="govuk-visually-hidden" aria-live="polite" ref={pageAnnouncer} />
       <SkipLink />
-      <CookieBanner />
+      <CookieBanner consent={consent} onAcceptAll={() => onSaveConsent(true)} />
       <header>
         <GovukHeader />
         <PhaseBanner phase="Alpha" feedbackHref="#" />
@@ -62,6 +68,7 @@ function App() {
             <Route path="/check-answers" element={guarded(questions.length, <CheckAnswersPage answers={answers} />)} />
             <Route path="/result" element={guarded(questions.length, <ResultPage answers={answers} onStartAgain={clearAnswers} />)} />
             <Route path="/accessibility-statement" element={<AccessibilityStatementPage />} />
+            <Route path="/cookies" element={<CookiesPage consent={consent} onSave={onSaveConsent} />} />
           </Routes>
         </main>
       </div>

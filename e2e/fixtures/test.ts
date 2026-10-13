@@ -3,6 +3,7 @@ import type { Outcome } from '../data/outcomes';
 import type { QuestionId } from '../data/questions';
 import { AccessibilityStatementPage } from '../pages/AccessibilityStatementPage';
 import { CheckAnswersPage } from '../pages/CheckAnswersPage';
+import { CookiesPage } from '../pages/CookiesPage';
 import { QuestionPage } from '../pages/QuestionPage';
 import { ResultPage } from '../pages/ResultPage';
 import { StartPage } from '../pages/StartPage';
@@ -14,6 +15,7 @@ interface PageFixtures {
   checkAnswersPage: CheckAnswersPage;
   resultPage: (outcome: Outcome) => ResultPage;
   statementPage: AccessibilityStatementPage;
+  cookiesPage: CookiesPage;
   journey: Journey;
 }
 
@@ -24,6 +26,7 @@ export const test = base.extend<PageFixtures>({
   checkAnswersPage: async ({ page }, use) => use(new CheckAnswersPage(page)),
   resultPage: async ({ page }, use) => use((outcome) => new ResultPage(page, outcome)),
   statementPage: async ({ page }, use) => use(new AccessibilityStatementPage(page)),
+  cookiesPage: async ({ page }, use) => use(new CookiesPage(page)),
   journey: async ({ page }, use) => use(new Journey(page)),
 });
 

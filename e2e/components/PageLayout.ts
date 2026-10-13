@@ -11,6 +11,7 @@ export class PageLayout {
   readonly main: Locator;
   readonly footer: Locator;
   readonly accessibilityStatementLink: Locator;
+  readonly cookiesLink: Locator;
   readonly cookieBanner: CookieBanner;
 
   constructor(page: Page) {
@@ -22,6 +23,7 @@ export class PageLayout {
     this.main = page.getByRole('main');
     this.footer = page.getByRole('contentinfo');
     this.accessibilityStatementLink = this.footer.getByRole('link', { name: 'Accessibility statement' });
+    this.cookiesLink = this.footer.getByRole('link', { name: 'Cookies', exact: true });
     this.cookieBanner = new CookieBanner(page);
   }
 }

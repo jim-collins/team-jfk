@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useCookiesLinkState } from '../utils/useCookiesLinkState';
 
 export default function GovukFooter() {
+  const cookiesLinkState = useCookiesLinkState();
   return (
     <footer className="govuk-footer">
       <div className="govuk-width-container">
@@ -10,6 +12,9 @@ export default function GovukFooter() {
             <ul className="govuk-footer__inline-list">
               <li className="govuk-footer__inline-list-item">
                 <Link className="govuk-footer__link" to="/accessibility-statement">Accessibility statement</Link>
+              </li>
+              <li className="govuk-footer__inline-list-item">
+                <Link className="govuk-footer__link" to="/cookies" state={cookiesLinkState}>Cookies</Link>
               </li>
             </ul>
             <span className="govuk-footer__licence-description">

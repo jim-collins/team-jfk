@@ -46,29 +46,3 @@ test.describe('GOV.UK page template', () => {
     expect(overflows).toBe(false);
   });
 });
-
-test.describe('Cookie banner (spec requirement 30)', () => {
-  test('shows on first visit with an essential-cookies message', async ({ startPage }) => {
-    await startPage.goto();
-    const { cookieBanner } = startPage.layout;
-    await expect(cookieBanner.region).toBeVisible();
-    await expect(cookieBanner.message).toBeVisible();
-  });
-
-  test('Hide this message hides it and moves focus to the main content', async ({ startPage }) => {
-    await startPage.goto();
-    await startPage.layout.cookieBanner.hide();
-    await expect(startPage.layout.main).toBeFocused();
-  });
-
-  test('stays hidden while moving through the service, and comes back on reload', async ({ page, startPage, questionPage }) => {
-    await startPage.goto();
-    await startPage.layout.cookieBanner.hide();
-    await startPage.start();
-    await questionPage('propertyType').expectLoaded();
-    await expect(startPage.layout.cookieBanner.region).toBeHidden();
-
-    await page.reload();
-    await expect(startPage.layout.cookieBanner.region).toBeVisible();
-  });
-});

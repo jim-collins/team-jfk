@@ -38,17 +38,10 @@ describe('page layout', () => {
     expect(link.closest('footer')).toBeTruthy();
   });
 
-  it('shows the cookie notice until it is hidden (req 30)', async () => {
-    const user = userEvent.setup();
+  it('has a footer link to the cookies page (req 30)', () => {
     renderAt('/');
-    expect(screen.getByText('This service uses only essential cookies.')).toBeTruthy();
-    expect(await axeViolations()).toEqual([]);
-    savePage('start-cookie-notice-shown');
-
-    await user.click(screen.getByRole('button', { name: 'Hide this message' }));
-    expect(screen.queryByText('This service uses only essential cookies.')).toBeNull();
-    expect(document.activeElement.id).toBe('main-content');
-    expect(await axeViolations()).toEqual([]);
-    savePage('start-cookie-notice-hidden');
+    const link = screen.getByRole('link', { name: 'Cookies' });
+    expect(link.getAttribute('href')).toBe('/cookies');
+    expect(link.closest('footer')).toBeTruthy();
   });
 });
