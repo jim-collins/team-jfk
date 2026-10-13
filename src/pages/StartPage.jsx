@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../utils/usePageTitle';
+import { SERVICE_NAME } from '../service';
 
 function StartPage() {
   usePageTitle();
@@ -7,7 +8,7 @@ function StartPage() {
   return (
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-two-thirds">
-        <h1 className="govuk-heading-xl">Check if you can get a Green Home Grant</h1>
+        <h1 className="govuk-heading-xl">{SERVICE_NAME}</h1>
         <p className="govuk-body">
           Use this service to find out if you can get a Green Home Grant towards insulation or a heat pump for your home.
         </p>

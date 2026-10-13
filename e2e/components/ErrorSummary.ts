@@ -4,12 +4,10 @@ import { expect, type Locator, type Page } from '@playwright/test';
 export class ErrorSummary {
   /** The focusable wrapper (tabindex="-1"). No role of its own, so the GOV.UK class is the stable hook. */
   readonly container: Locator;
-  readonly alert: Locator;
   readonly title: Locator;
 
   constructor(page: Page) {
     this.container = page.locator('.govuk-error-summary');
-    this.alert = this.container.getByRole('alert');
     this.title = this.container.getByRole('heading', { name: 'There is a problem' });
   }
 

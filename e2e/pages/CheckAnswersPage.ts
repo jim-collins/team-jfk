@@ -4,13 +4,11 @@ import { questionOrder, questions, type Answers, type QuestionId } from '../data
 import { BasePage } from './BasePage';
 
 export class CheckAnswersPage extends BasePage {
-  readonly backLink: Locator;
   readonly summary: SummaryList;
   readonly checkEligibilityButton: Locator;
 
   constructor(page: Page) {
     super(page, '/check-answers', 'Check your answers');
-    this.backLink = page.getByRole('link', { name: 'Back', exact: true });
     this.summary = new SummaryList(page);
     this.checkEligibilityButton = page.getByRole('button', { name: 'Check eligibility' });
   }

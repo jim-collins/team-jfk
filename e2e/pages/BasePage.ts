@@ -6,6 +6,8 @@ import { titleSuffix } from '../data/questions';
 export abstract class BasePage {
   readonly layout: PageLayout;
   readonly heading: Locator;
+  /** GOV.UK back link. Not on every page, but declared once here so no page object repeats it. */
+  readonly backLink: Locator;
   /** Matches this page's address, with or without a query string. */
   readonly url: RegExp;
 
@@ -16,6 +18,7 @@ export abstract class BasePage {
   ) {
     this.layout = new PageLayout(page);
     this.url = new RegExp(`${escapeRegExp(path)}(\\?.*)?$`);
+    this.backLink = page.getByRole('link', { name: 'Back', exact: true });
     this.heading = page.getByRole('heading', { level: 1, name: headingText, exact: true });
   }
 

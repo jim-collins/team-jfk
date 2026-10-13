@@ -7,7 +7,6 @@ import { BasePage } from './BasePage';
 /** One question page: a radio group, Continue, Back and the GOV.UK error pattern. Shared by all five questions. */
 export class QuestionPage<Q extends QuestionId = QuestionId> extends BasePage {
   readonly question: (typeof questions)[Q];
-  readonly backLink: Locator;
   readonly hint: Locator;
   readonly radios: RadioGroup<OptionLabel<Q>>;
   readonly continueButton: Locator;
@@ -17,16 +16,10 @@ export class QuestionPage<Q extends QuestionId = QuestionId> extends BasePage {
     const question = questions[id];
     super(page, question.path, question.heading);
     this.question = question;
-    this.backLink = page.getByRole('link', { name: 'Back', exact: true });
     this.hint = page.locator('.govuk-hint');
     this.radios = new RadioGroup<OptionLabel<Q>>(page, question.heading);
     this.continueButton = page.getByRole('button', { name: 'Continue' });
     this.errorSummary = new ErrorSummary(page);
-  }
-
-  /** Opens this question as if from a Change link on Check your answers. */
-  async gotoChange(): Promise<void> {
-    await this.page.goto(`${this.path}?change=1`);
   }
 
   async answer(label: OptionLabel<Q>): Promise<void> {

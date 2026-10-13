@@ -4,6 +4,9 @@ import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import axe from 'axe-core';
 import App from '../src/App';
+import { screen } from '@testing-library/react';
+
+export { SERVICE_NAME, SERVICE_TITLE } from '../src/service';
 
 const PAGES_DIR = path.join(__dirname, 'pages');
 
@@ -14,6 +17,17 @@ export function renderAt(address) {
       <App />
     </MemoryRouter>
   );
+}
+
+// Start the service and answer questions in order by clicking each label then Continue.
+// Pass as many labels as questions to answer; the browser is left on the next page.
+export async function startAndAnswer(user, labels) {
+  renderAt('/');
+  await user.click(screen.getByRole('button', { name: 'Start now' }));
+  for (const label of labels) {
+    await user.click(screen.getByLabelText(label));
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
+  }
 }
 
 // Run axe on the current page. jsdom can't compute colours, so colour contrast

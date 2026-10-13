@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { focusElement } from '../utils/focus';
+import { SERVICE_NAME } from '../service';
+import GovukButton from './GovukButton';
 
 // Only essential cookies, so there is nothing to accept or reject.
 // Hiding it lasts until the page is reloaded (spec: no browser storage).
@@ -18,13 +20,13 @@ export default function CookieBanner() {
       className="govuk-cookie-banner"
       data-nosnippet
       role="region"
-      aria-label="Cookies on Check if you can get a Green Home Grant"
+      aria-label={`Cookies on ${SERVICE_NAME}`}
     >
       <div className="govuk-cookie-banner__message govuk-width-container">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h2 className="govuk-cookie-banner__heading govuk-heading-m">
-              Cookies on Check if you can get a Green Home Grant
+              Cookies on {SERVICE_NAME}
             </h2>
             <div className="govuk-cookie-banner__content">
               <p className="govuk-body">This service uses only essential cookies.</p>
@@ -32,9 +34,7 @@ export default function CookieBanner() {
           </div>
         </div>
         <div className="govuk-button-group">
-          <button type="button" className="govuk-button" onClick={handleHide}>
-            Hide this message
-          </button>
+          <GovukButton onClick={handleHide}>Hide this message</GovukButton>
         </div>
       </div>
     </div>

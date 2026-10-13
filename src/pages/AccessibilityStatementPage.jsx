@@ -1,4 +1,5 @@
 import { usePageTitle } from '../utils/usePageTitle';
+import { SERVICE_NAME } from '../service';
 
 // Structure follows GOV.UK's accessibility statement (https://www.gov.uk/help/accessibility-statement).
 // Only claim what has been tested: update this page when done.md changes.
@@ -8,9 +9,9 @@ export default function AccessibilityStatementPage() {
   return (
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-two-thirds">
-        <h1 className="govuk-heading-xl">Accessibility statement for Check if you can get a Green Home Grant</h1>
+        <h1 className="govuk-heading-xl">Accessibility statement for {SERVICE_NAME}</h1>
         <p className="govuk-body">
-          This accessibility statement applies to the Check if you can get a Green Home Grant service.
+          This accessibility statement applies to the {SERVICE_NAME} service.
         </p>
         <p className="govuk-body">This service is run by [organisation to be confirmed].</p>
 

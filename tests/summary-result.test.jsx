@@ -1,20 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderAt, axeViolations, savePage } from './helpers';
+import { axeViolations, savePage, startAndAnswer as answerAll, SERVICE_TITLE as SERVICE } from './helpers';
 import { questions } from '../src/questions';
 
-const SERVICE = 'Check if you can get a Green Home Grant - GOV.UK';
-
-// Start the service and answer all five questions with the given labels, in order.
-async function answerAll(user, labels) {
-  renderAt('/');
-  await user.click(screen.getByRole('button', { name: 'Start now' }));
-  for (const label of labels) {
-    await user.click(screen.getByLabelText(label));
-    await user.click(screen.getByRole('button', { name: 'Continue' }));
-  }
-}
 
 const ELIGIBLE = ['House', 'Own outright', 'Up to £30,000', 'None', 'Gas boiler'];
 

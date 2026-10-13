@@ -1,9 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderAt, axeViolations, savePage } from './helpers';
+import { renderAt, axeViolations, savePage, SERVICE_TITLE as SERVICE } from './helpers';
 
-const SERVICE = 'Check if you can get a Green Home Grant - GOV.UK';
 
 describe('accessibility statement (req 29)', () => {
   it('follows the GOV.UK accessibility statement structure, in order', async () => {

@@ -1,20 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderAt, axeViolations, savePage } from './helpers';
+import { renderAt, axeViolations, savePage, startAndAnswer, SERVICE_TITLE as SERVICE } from './helpers';
 import { questions } from '../src/questions';
 
-const SERVICE = 'Check if you can get a Green Home Grant - GOV.UK';
-
 // Start the service and answer the questions before `index` with their first option.
-async function answerUpTo(user, index) {
-  renderAt('/');
-  await user.click(screen.getByRole('button', { name: 'Start now' }));
-  for (const q of questions.slice(0, index)) {
-    await user.click(screen.getByLabelText(q.options[0].label));
-    await user.click(screen.getByRole('button', { name: 'Continue' }));
-  }
-}
+const answerUpTo = (user, index) => startAndAnswer(user, questions.slice(0, index).map((q) => q.options[0].label));
 
 describe('start page (req 1, 2)', () => {
   it('describes the service, says you must own your home, and starts the questions', async () => {

@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { questions } from './questions';
+import { usePageChangeFocus } from './utils/usePageChangeFocus';
 import SkipLink from './components/SkipLink';
-import { focusElement } from './utils/focus';
 import CookieBanner from './components/CookieBanner';
 import GovukHeader from './components/GovukHeader';
 import PhaseBanner from './components/PhaseBanner';
@@ -27,24 +27,13 @@ function App() {
   const [answers, setAnswers] = useState(NO_ANSWERS);
   const onAnswer = (id, value) => setAnswers((current) => ({ ...current, [id]: value }));
 
-  // After each page change, move focus to the top of the page (so Tab reaches the skip link first)
-  // and read out the new title through a live region.
-  // Pages set their title in their own effects, which run before this one.
-  // Only a new path or query counts: not the first load (StrictMode runs effects twice) or a '#' link.
-  const location = useLocation();
-  const pageAddress = location.pathname + location.search;
   const pageAnnouncer = useRef(null);
-  const lastPageAddress = useRef(pageAddress);
-  useEffect(() => {
-    if (lastPageAddress.current === pageAddress) return;
-    lastPageAddress.current = pageAddress;
-    pageAnnouncer.current.textContent = document.title;
-    focusElement(document.body);
-  }, [pageAddress]);
+  usePageChangeFocus(pageAnnouncer);
 
-  const page = (Page, before) => (
+  // Every page after the start needs the questions before it answered.
+  const guarded = (before, element) => (
     <RequireAnswers answers={answers} before={before}>
-      <Page answers={answers} onAnswer={onAnswer} />
+      {element}
     </RequireAnswers>
   );
 
@@ -62,19 +51,15 @@ function App() {
           <Routes>
             <Route path="/" element={<StartPage />} />
             {questions.map((q, index) => (
+              // QuestionPage's key: a new question starts fresh rather than reusing the last one's state
               <Route
                 key={q.id}
                 path={q.path}
-                element={
-                  <RequireAnswers answers={answers} before={index}>
-                    {/* key: a new question starts fresh rather than reusing the last one's state */}
-                    <QuestionPage key={q.id} questionId={q.id} answers={answers} onAnswer={onAnswer} />
-                  </RequireAnswers>
-                }
+                element={guarded(index, <QuestionPage key={q.id} question={q} index={index} answers={answers} onAnswer={onAnswer} />)}
               />
             ))}
-            <Route path="/check-answers" element={page(CheckAnswersPage, questions.length)} />
-            <Route path="/result" element={page(ResultPage, questions.length)} />
+            <Route path="/check-answers" element={guarded(questions.length, <CheckAnswersPage answers={answers} />)} />
+            <Route path="/result" element={guarded(questions.length, <ResultPage answers={answers} />)} />
             <Route path="/accessibility-statement" element={<AccessibilityStatementPage />} />
           </Routes>
         </main>
