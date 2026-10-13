@@ -54,11 +54,11 @@ The result page lists every reason. Wording (suggested by Claude, approved):
 - Final submission: Day 2, 16:00.
 - The project lives in `~/Documents/my-work/w03-hackathon/`. It was first kept in `readwrite-classroom/`, but npm cannot install there, so the user chose to move it (build step 1).
 - In scope: phase banner, footer, accessibility statement and cookie notice.
+- Playwright end-to-end tests in TypeScript (first out of scope; added at the user's request after the build).
 
 ## Out of scope
 
 - Save and return (localStorage)
-- Playwright end-to-end tests
 - A real application form, a backend or data storage
 - The monetary value of the grant
 - Welsh language

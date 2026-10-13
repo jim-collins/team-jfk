@@ -9,6 +9,8 @@ Read `intent.md`, `spec.md` and `plan.md` before changing anything.
   `➜  Local:   http://localhost:5000/`
 - `npm test`: Vitest, runs once
   `Tests  6 passed (6)`
+- `npm run test:e2e`: Playwright end-to-end tests (builds and serves the app itself on port 4173). See `e2e/README.md`.
+  `192 passed`
 - `npm run build && npm run preview`: production build, used for Lighthouse
 - Contrast and axe in real Chrome, after `npm test` and `npm run build`:
   `~/.claude/skills/new-project/scripts/lighthouse-pages.sh --dir tests/pages --css dist/assets/index-*.css`
@@ -26,6 +28,7 @@ Read `intent.md`, `spec.md` and `plan.md` before changing anything.
 - No inline `style=`, no `<style>` or `<script>` blocks.
 - Never change the `server` section of `vite.config.js`. Test settings are in `vitest.config.js`.
 - Tests that render a page run axe (`tests/helpers.jsx`) and save the page to `tests/pages/` for the contrast check.
+- Playwright tests: selectors only in `e2e/components/` and `e2e/pages/`; expected text in `e2e/data/`, from the spec, not imported from `src/`.
 - Never run code from `readwrite-classroom/`: it is a network drive and npm cannot install there.
 
 ## Common mistakes
