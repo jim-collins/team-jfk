@@ -3,6 +3,15 @@
 Browser tests for the whole service, in TypeScript, using the Page Object Model.
 Vitest (in `tests/`) still covers the eligibility rules and renders pages with axe; Playwright covers what only a real browser shows: navigation, focus, page titles, reloads and layout at 320px.
 
+## Setup
+
+From the project root, after cloning or pulling:
+
+```bash
+npm install                              # installs @playwright/test and TypeScript
+npx playwright install chromium firefox  # downloads the browsers (once per machine)
+```
+
 ## Running
 
 | Command | What it does |
@@ -13,8 +22,6 @@ Vitest (in `tests/`) still covers the eligibility rules and renders pages with a
 | `npm run test:e2e -- --ui` | Watch tests run, step by step |
 | `npm run test:e2e:report` | Opens the HTML report from the last run |
 | `npm run typecheck:e2e` | Type-checks the tests (Playwright itself doesn't) |
-
-First time on a new machine: `npx playwright install chromium firefox`.
 
 ### Environments
 

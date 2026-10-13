@@ -46,6 +46,28 @@ Dependencies are not vendored into the repo; `npm install` pulls
 them fresh from the package registry. Expect the install to take
 30-60 seconds on a fast connection.
 
+## Running the tests
+
+After cloning or pulling (run these again whenever `package.json` changes):
+
+```bash
+npm install                              # project dependencies, including Playwright
+npx playwright install chromium firefox  # browsers for the end-to-end tests (once per machine)
+```
+
+Then:
+
+| Command | What it runs |
+|---|---|
+| `npm test` | Vitest unit and page tests (eligibility rules, axe) |
+| `npm run test:e2e` | Playwright end-to-end tests in Chromium, Firefox and at 320px wide. Builds and serves the app itself on port 4173, so no dev server is needed |
+| `npm run test:e2e -- --project=chromium` | End-to-end tests in one browser only |
+| `npm run test:e2e:report` | Opens the HTML report from the last end-to-end run (screenshots and traces of any failures) |
+| `npm run typecheck:e2e` | Type-checks the TypeScript end-to-end tests |
+
+To run the end-to-end tests against the lab dev server instead, start it (see `CLAUDE.md`) and run
+`TEST_ENV=test npm run test:e2e`. See [`e2e/README.md`](e2e/README.md) for environments, debugging failures and how the tests are organised.
+
 ## Starter Scaffold
 
 The starter you copied into your working directory contains:
