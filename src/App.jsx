@@ -66,7 +66,7 @@ function App() {
               />
             ))}
             <Route path="/check-answers" element={guarded(questions.length, <CheckAnswersPage answers={answers} />)} />
-            <Route path="/result" element={guarded(questions.length, <ResultPage answers={answers} onStartAgain={clearAnswers} />)} />
+            <Route path="/result" element={guarded(questions.length, <ResultPage answers={answers} onClose={clearAnswers} />)} />
             <Route path="/accessibility-statement" element={<AccessibilityStatementPage />} />
             <Route path="/cookies" element={<CookiesPage consent={consent} onSave={onSaveConsent} />} />
           </Routes>

@@ -16,16 +16,16 @@ const NEXT_STEPS = {
   'not-eligible': 'You can find other help with energy costs and home improvements on GOV.UK.',
 };
 
-function ResultPage({ answers, onStartAgain }) {
+function ResultPage({ answers, onClose }) {
   const navigate = useNavigate();
   const { status, reasons } = checkEligibility(answers);
   usePageTitle(HEADINGS[status]);
 
   // Go to the start page and clear the answers in the same update, so the result page
   // never renders with empty answers (which would redirect to the first question).
-  function handleStartAgain() {
+  function handleClose() {
     navigate('/');
-    onStartAgain();
+    onClose();
   }
 
   return (
@@ -46,7 +46,7 @@ function ResultPage({ answers, onStartAgain }) {
         )}
         <h2 className="govuk-heading-m">What to do next</h2>
         <p className="govuk-body">{NEXT_STEPS[status]}</p>
-        <GovukButton onClick={handleStartAgain}>Start again</GovukButton>
+        <GovukButton onClick={handleClose}>Close</GovukButton>
       </div>
     </div>
   );

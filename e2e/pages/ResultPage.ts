@@ -10,7 +10,7 @@ export class ResultPage extends BasePage {
   readonly reasons: Locator;
   readonly nextStepsHeading: Locator;
   readonly nextSteps: Locator;
-  readonly startAgainButton: Locator;
+  readonly closeButton: Locator;
 
   constructor(page: Page, readonly outcome: Outcome) {
     super(page, '/result', outcomeHeadings[outcome]);
@@ -19,7 +19,7 @@ export class ResultPage extends BasePage {
     this.reasons = this.whyHeading.locator('xpath=following-sibling::ul[1]').getByRole('listitem');
     this.nextStepsHeading = page.getByRole('heading', { level: 2, name: 'What to do next' });
     this.nextSteps = this.nextStepsHeading.locator('xpath=following-sibling::p[1]');
-    this.startAgainButton = page.getByRole('button', { name: 'Start again' });
+    this.closeButton = page.getByRole('button', { name: 'Close' });
   }
 
   override get expectedTitle(): string {
@@ -38,11 +38,11 @@ export class ResultPage extends BasePage {
     await expect(this.nextSteps).toHaveText(nextSteps[this.outcome]);
     // Spec requirement 19: plain text, no links.
     await expect(this.nextSteps.getByRole('link')).toHaveCount(0);
-    await expect(this.startAgainButton).toBeVisible();
+    await expect(this.closeButton).toBeVisible();
   }
 
   /** Clears every answer and opens the start page (spec requirement 19a). */
-  async startAgain(): Promise<void> {
-    await this.startAgainButton.click();
+  async close(): Promise<void> {
+    await this.closeButton.click();
   }
 }

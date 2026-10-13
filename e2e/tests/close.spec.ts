@@ -2,11 +2,11 @@ import { test, expect } from '../fixtures/test';
 import { eligibleAnswers, scenarios } from '../data/outcomes';
 import { questionOrder } from '../data/questions';
 
-// Spec requirement 19a: Start again on the result page clears the answers and opens the start page.
+// Spec requirement 19a: Close on the result page clears the answers and opens the start page.
 const notEligible = scenarios.find((s) => s.outcome === 'not-eligible');
 if (!notEligible) throw new Error('outcomes.ts needs a not-eligible scenario');
 
-test.describe('Start again', () => {
+test.describe('Close button on the result page', () => {
   for (const scenario of scenarios) {
     test(`shows on the ${scenario.name} result and opens the start page`, async ({ journey, resultPage, startPage }) => {
       const checkAnswers = await journey.answerAll(scenario.answers);
@@ -14,7 +14,7 @@ test.describe('Start again', () => {
       const result = resultPage(scenario.outcome);
       await result.expectLoaded();
 
-      await result.startAgain();
+      await result.close();
 
       await startPage.expectLoaded();
       await expect(startPage.startButton).toBeVisible();
@@ -24,7 +24,7 @@ test.describe('Start again', () => {
   test('clears every answer, so each question starts with nothing chosen', async ({ journey, resultPage, startPage, questionPage }) => {
     const checkAnswers = await journey.answerAll(notEligible.answers);
     await checkAnswers.checkEligibility();
-    await resultPage(notEligible.outcome).startAgain();
+    await resultPage(notEligible.outcome).close();
     await startPage.start();
 
     for (const id of questionOrder) {
@@ -38,7 +38,7 @@ test.describe('Start again', () => {
   test('a second check gives a result from the new answers only', async ({ journey, resultPage, startPage, questionPage, checkAnswersPage }) => {
     const firstCheck = await journey.answerAll(notEligible.answers);
     await firstCheck.checkEligibility();
-    await resultPage(notEligible.outcome).startAgain();
+    await resultPage(notEligible.outcome).close();
 
     await startPage.start();
     for (const id of questionOrder) {
@@ -54,7 +54,7 @@ test.describe('Start again', () => {
     const checkAnswers = await journey.answerAll(eligibleAnswers);
     await checkAnswers.checkEligibility();
     const result = resultPage('eligible');
-    await result.startAgainButton.focus();
+    await result.closeButton.focus();
 
     await page.keyboard.press('Enter');
 

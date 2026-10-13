@@ -59,7 +59,7 @@ Requirements marked **(A)** are Claude's assumptions, not the user's words. They
 19. Below the reasons is a "What to do next" section, shown as plain text with no links:
     - Eligible or partial: "Apply for the Green Home Grant. You'll need proof of your household income and of home ownership."
     - Not eligible: "You can find other help with energy costs and home improvements on GOV.UK."
-19a. Below "What to do next" is a "Start again" button. It clears every answer and opens the start page, so the next check starts with nothing selected. (Added at the user's request after the build; clearing the answers is Claude's assumption **(A)**.)
+19a. Below "What to do next" is a "Close" button (first called "Start again"; renamed at the user's request). It clears every answer and opens the start page, so the next check starts with nothing selected. (Added at the user's request after the build; clearing the answers is Claude's assumption **(A)**.)
 
 ### Validation and errors
 
