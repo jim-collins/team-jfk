@@ -1,50 +1,70 @@
-# Citizen-Facing Service Prototype -- Project Lab
+# Check if you can get a Green Home Grant
 
-## Objectives
+A GOV.UK-style service that tells homeowners whether they are likely to get a Green Home Grant towards insulation or a heat pump. It replaces a phone call that used to take an average of 35 minutes.
 
-Build a multi-step eligibility checker for the Green Home Grant scheme that follows GOV.UK design patterns and meets WCAG 2.2 AA accessibility requirements.
+The service is an **Alpha** prototype. It has no backend, so answers are kept only in the browser's memory and are lost on reload.
 
-## Prerequisites
+## How it works
 
-### Skills (from Weeks 1 and 2)
+The user answers five questions, one per page, checks their answers, and gets a result.
 
-- Building React components using functional component syntax (W2 Day 1 AM)
-- Managing component state with useState (W2 Day 1 AM)
-- Handling side effects with useEffect (W2 Day 1 AM)
-- Writing JSX with conditional rendering and list iteration (W2 Day 1 AM)
-- Applying GOV.UK design patterns for typography, spacing, and form controls (W2 Day 1 PM)
-- Implementing WCAG 2.2 AA compliance: semantic HTML, keyboard navigation, ARIA labels (W2 Day 1 PM)
-- Using AI to scaffold React applications with routing (W2 Day 2 AM)
-- Writing and running tests with Playwright or Vitest (W2 Day 2 PM)
-- Code reviewing AI-generated code with an explain-before-you-commit workflow (W1 Day 1 PM)
+| Question | Answers | Effect |
+|---|---|---|
+| What type of property do you live in? | House, Flat, Bungalow | All eligible |
+| Do you own your home outright or with a mortgage? | Own outright, Own with a mortgage | Both eligible |
+| What is your household income? | Up to £30,000 · £30,001 to £50,000 · Over £50,000 | Eligible · partial · not eligible |
+| What insulation does your home already have? | None · Loft only · Walls only · Loft and walls | Eligible · partial · partial · not eligible |
+| How is your home currently heated? | Gas boiler, Oil boiler · Electric heating · Heat pump | Eligible · partial · not eligible |
 
-### Tools and Access
+Any "not eligible" answer makes the result **not eligible**. Otherwise, any "partial" answer makes it **partially eligible**. Otherwise the result is **eligible**. The result page lists the reason for every answer that lowered the result, says what to do next, and has a **Close** button that clears the answers and returns to the start page.
 
-- Node.js 18.x or later
-- npm 9.x or later
-- Claude CLI installed and authenticated
-- A modern browser (Chrome, Firefox, or Edge) with developer tools
-- Terminal access
+Pages:
 
-## Setup
+| Page | Address |
+|---|---|
+| Start | `/` |
+| The five questions | `/property-type`, `/ownership`, `/income`, `/insulation`, `/heating` |
+| Check your answers (with Change links) | `/check-answers` |
+| Result | `/result` |
+| Cookies | `/cookies` |
+| Accessibility statement | `/accessibility-statement` |
 
-Create your working directory and copy the starter out of the read-only
-courseware tree (working directory per Environment Contract §2d):
+Opening a later page directly, or reloading, sends the user to the first unanswered question.
 
-```bash
-mkdir -p ~/Documents/my-work/w03-hackathon && cd ~/Documents/my-work/w03-hackathon
-cp -r ~/Documents/readonly-courseware/swe-v1-ukds-c1/courseware/labs/w03-hackathon-citizen-service/hackathon/starter/. .
-```
+It follows the GOV.UK Design System (GOV.UK Frontend styles, no GOV.UK Frontend JavaScript) and aims to meet WCAG 2.2 AA. Every page has an error pattern where needed, a skip link, an Alpha phase banner, a cookie banner and a footer.
 
-Then install dependencies before starting:
+## Built with
+
+- React 18 and React Router 6, built with Vite 5
+- [GOV.UK Frontend](https://frontend.design-system.service.gov.uk/) for styles, fonts and images
+- Vitest 1, Testing Library and axe-core for unit and page tests
+- Playwright (TypeScript) for end-to-end tests
+
+## Running the app
+
+You need Node.js 18 or later and npm.
 
 ```bash
 npm install
+npm run dev
 ```
 
-Dependencies are not vendored into the repo; `npm install` pulls
-them fresh from the package registry. Expect the install to take
-30-60 seconds on a fast connection.
+The dev server listens on port 5002: open http://localhost:5002/.
+
+In the lab, the proxy expects port 5000 and the lab hostname:
+
+```bash
+VITE_PORT=5000 VITE_PUBLIC_HOSTNAME=app-lab11126.labs.decoded.com npm run dev
+```
+
+Then open https://app-lab11126.labs.decoded.com/.
+
+For a production build:
+
+```bash
+npm run build      # writes dist/
+npm run preview    # serves dist/ on http://localhost:4173/
+```
 
 ## Running the tests
 
@@ -55,112 +75,36 @@ npm install                              # project dependencies, including Playw
 npx playwright install chromium firefox  # browsers for the end-to-end tests (once per machine)
 ```
 
-Then:
-
 | Command | What it runs |
 |---|---|
-| `npm test` | Vitest unit and page tests (eligibility rules, axe) |
+| `npm test` | Vitest: eligibility rules, and every page and error state rendered and checked with axe |
 | `npm run test:e2e` | Playwright end-to-end tests in Chromium, Firefox and at 320px wide. Builds and serves the app itself on port 4173, so no dev server is needed |
 | `npm run test:e2e -- --project=chromium` | End-to-end tests in one browser only |
 | `npm run test:e2e:report` | Opens the HTML report from the last end-to-end run (screenshots and traces of any failures) |
 | `npm run typecheck:e2e` | Type-checks the TypeScript end-to-end tests |
 
-To run the end-to-end tests against the lab dev server instead, start it (see `CLAUDE.md`) and run
-`TEST_ENV=test npm run test:e2e`. See [`e2e/README.md`](e2e/README.md) for environments, debugging failures and how the tests are organised.
+To run the end-to-end tests against the lab dev server instead, start it (above) and run `TEST_ENV=test npm run test:e2e`. See [`e2e/README.md`](e2e/README.md) for environments, debugging failures and how the tests are organised.
 
-## Starter Scaffold
-
-The starter you copied into your working directory contains:
-
-| File / Directory | Purpose |
-|-----------------|---------|
-| `package.json` | Project dependencies: react, react-dom, react-router-dom, vite |
-| `vite.config.js` | Vite configuration for React |
-| `index.html` | HTML entry point with GOV.UK-compatible meta tags |
-| `src/main.jsx` | React entry point rendering the App component |
-| `src/App.jsx` | Router setup with routes for each page |
-| `src/App.css` | GOV.UK CSS variables and base styles |
-| `src/pages/StartPage.jsx` | Placeholder start page component |
-| `src/pages/PropertyTypePage.jsx` | Placeholder question page |
-| `src/pages/OwnershipPage.jsx` | Placeholder question page |
-| `src/pages/IncomePage.jsx` | Placeholder question page |
-| `src/pages/InsulationPage.jsx` | Placeholder question page |
-| `src/pages/HeatingPage.jsx` | Placeholder question page |
-| `src/pages/CheckAnswersPage.jsx` | Placeholder summary page |
-| `src/pages/ResultPage.jsx` | Placeholder result page |
-| `src/components/GovukHeader.jsx` | Placeholder header component |
-| `src/components/GovukButton.jsx` | Placeholder button component |
-| `src/components/PhaseBanner.jsx` | GOV.UK phase banner (alpha/beta tag + feedback link) |
-| `src/components/GovukFooter.jsx` | GOV.UK footer with accessibility statement link |
-| `src/pages/AccessibilityStatementPage.jsx` | PSBAR-structured accessibility statement stub |
-
-> **Note:** This starter scaffold teaches GOV.UK patterns from first principles. Production services use [govuk-frontend](https://frontend.design-system.service.gov.uk/) or [govuk-react](https://github.com/govuk-react/govuk-react) for pre-built, tested components.
-
-## Acceptance Criteria
-
-- [ ] Start page displays with a title, description, and "Start now" button
-- [ ] Clicking "Start now" navigates to the first question
-- [ ] There are at least 5 question pages, each asking one question (one-thing-per-page)
-- [ ] Each question page has a "Continue" button that navigates to the next question
-- [ ] Users can navigate back to previous questions using a "Back" link
-- [ ] A "Check your answers" page displays all responses in a summary list
-- [ ] Each answer on the summary page has a "Change" link that returns to that question
-- [ ] After confirming answers, a result page shows eligibility (eligible / not eligible / partial)
-- [ ] All form inputs have associated `<label>` elements
-- [ ] All interactive elements are reachable and operable with keyboard only (Tab, Enter, Space)
-- [ ] Colour contrast meets 4.5:1 ratio for all text
-- [ ] The layout reflows at 320px width without horizontal scrolling
-- [ ] Client-side validation shows error messages for empty required fields
-- [ ] Error messages follow GOV.UK pattern: error summary at top of page, inline error per field
-- [ ] At least 5 unit tests pass for the eligibility logic
-- [ ] An `AI_LOG.md` file documents 3+ AI-assisted development instances (open the seeded `AI_LOG.md` in your working directory and complete four fields per entry)
-
-## Day 1 Target
-
-By end of Day 1, you should have:
-
-- [ ] Start page rendering and navigating to the first question
-- [ ] All 5+ question pages rendering with navigation (Continue / Back)
-- [ ] Form state persisted across pages (answers not lost when navigating)
-- [ ] Eligibility logic function written (even if not all edge cases are covered)
-- [ ] At least one complete path from start to result page working
-
-## Teardown
-
-1. Stop the Vite dev server (Ctrl+C in the terminal)
-2. No cloud resources or containers to clean up
-
-## Hints
-
-<details>
-<summary>Architecture suggestion</summary>
-
-Hold all form answers in a single state object at the App level. Pass the state and a setter function down to each page via props or React context. Each page reads its relevant field and updates it on "Continue". This avoids the need for a state management library.
+## Project layout
 
 ```
-formData = {
-  propertyType: "",
-  ownership: "",
-  incomeBand: "",
-  insulation: "",
-  heating: ""
-}
+src/
+  App.jsx             answers state, routes, page shell
+  questions.js        the five questions, answers and error messages
+  service.js          the service name
+  utils/eligibility.js  the eligibility rules (the only place they live)
+  pages/              start, check answers, result, cookies, accessibility statement
+  components/         GOV.UK components: question page, radios, error summary, header, footer, banners
+tests/                Vitest tests
+e2e/                  Playwright tests (page objects, fixtures, specs)
 ```
 
-The eligibility function takes this object and returns a result string. Keep it as a pure function in its own file so you can test it independently.
+## Project documents
 
-</details>
-
-<details>
-<summary>If you are stuck on navigation between pages</summary>
-
-Use react-router-dom's `useNavigate` hook. Each page's "Continue" handler saves the answer to state and then calls `navigate("/next-page-path")`. The "Back" link uses `navigate(-1)` or an explicit path to the previous question.
-
-</details>
-
-<details>
-<summary>If GOV.UK styling looks wrong</summary>
-
-The starter CSS uses CSS custom properties matching GOV.UK values. Check that your components use the correct class names: `govuk-heading-xl`, `govuk-body`, `govuk-button`, `govuk-form-group`, `govuk-label`, `govuk-input`, `govuk-radios`. The styles for these classes are defined in `src/App.css`.
-
-</details>
+- [`intent.md`](intent.md): the problem, who it is for and what is in scope
+- [`spec.md`](spec.md): numbered requirements and decisions
+- [`plan.md`](plan.md): the build plan
+- [`done.md`](done.md): automated results and manual checks
+- [`AI_LOG.md`](AI_LOG.md): how AI was used to build it
+- [`CLAUDE.md`](CLAUDE.md): conventions for working on the code with Claude Code
+- [`ONBOARDING.md`](ONBOARDING.md): onboarding guide for new teammates using Claude Code
